@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { SafeAreaView, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import Header from './components/Header'
 import Post from './components/Post'
+import Feed from './screens/Feed'
 
 export default class App extends Component {
     render() {
@@ -13,8 +14,7 @@ export default class App extends Component {
 
         return (
             <SafeAreaView>
-                <Header />
-                <Post image={require('./assets/imgs/fence.jpg')} comments={comments} />
+                <Feed></Feed>
             </SafeAreaView>
         )
     }

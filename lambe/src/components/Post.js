@@ -8,7 +8,7 @@ export default Post = (props) => {
     return (
         <View style={styles.container}>
             <Image source={props.image} style={styles.image}></Image>
-            <Author email="jv._.araujo@hotmail.com" nickName="Joao Araujo"></Author>
+            <Author email={props.email} nickName={props.nickName}></Author>
             <Comments comments={props.comments} />
             <AddComment></AddComment>
         </View>
