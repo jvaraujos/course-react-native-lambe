@@ -7,7 +7,7 @@ export default Comments = (props) => {
 
         view = props.comments.map((item, index) => {
             return (
-                <View style={styles.commentContainer}>
+                <View style={styles.commentContainer} key={index}>
                     <Text style={styles.nickName}>{item.nickName}</Text>
                     <Text style={styles.comment}>{item.comment}</Text>
                 </View>
