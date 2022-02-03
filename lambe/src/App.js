@@ -1,27 +1,14 @@
-import React, { Component } from 'react'
-import { SafeAreaView, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import Header from './components/Header'
-import Post from './components/Post'
-import Feed from './screens/Feed'
+import 'react-native-gesture-handler';
+import React from 'react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import Router from './routes';
 
-export default class App extends Component {
-    render() {
-        const comments = [
-            { nickName: 'Thiago', comment: 'Excelente Foto!' },
-            { nickName: 'Anaina', comment: 'Gordo feio!' },
-            { nickName: 'Fran', comment: 'Ola!' },
-        ]
+const App = () => {
+    return (
+        <SafeAreaProvider>
+            <Router />
+        </SafeAreaProvider>
+    );
+};
 
-        return (
-            <SafeAreaView>
-                <Feed></Feed>
-            </SafeAreaView>
-        )
-    }
-}
-const styles = StyleSheet.create({
-    container: {
-
-    }
-})
-
+export default App;

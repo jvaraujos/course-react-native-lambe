@@ -1,6 +1,8 @@
 import React from 'react'
 import { ScrollView, View, StyleSheet, FlatList } from 'react-native'
 import Header from '../components/Header'
+import Post from '../components/Post'
+
 export default Feed = (props) => {
     state = {
         pots: [{
@@ -20,7 +22,7 @@ export default Feed = (props) => {
             id: Math.random(),
             nickName: "Francisco Almeida",
             email: "xico@gmail.com",
-            image: require('../assets/imgs/fence.jpg'),
+            image: require('../assets/imgs/bw.jpg'),
             comments: []
         }]
     }
