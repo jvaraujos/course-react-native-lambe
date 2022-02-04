@@ -6,7 +6,6 @@ export default props => {
     logout = () => {
         props.navigation.navigate('Auth')
     }
-
     const options = { email: props.email, secure: true }
     return (
         <View style={styles.container}>
