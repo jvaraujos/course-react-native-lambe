@@ -23,11 +23,21 @@ class AddPhoto extends Component {
         image: {
             uri: null,
             base64: '',
-            comment: '',
-        }
+        },
+        comment: ''
     }
 
+    componentDidUpdate = prevProps => {
+        if (prevProps.loading && !this.props.loading) {
+            this.setState({
+                image: null,
+                comment: '',
+            })
+            this.props.navigation.navigate('Feed')
 
+        }
+
+    }
     save = () => {
         if (!this.props.name) {
             Alert.alert('Falha!', noUser)
@@ -43,9 +53,6 @@ class AddPhoto extends Component {
                 comment: this.state.comment
             }]
         })
-
-        this.setState({ image: null, comment: '', base64: '' })
-        this.props.navigation.navigate('Feed')
     }
 
     pickImage = () => {
@@ -134,10 +141,11 @@ const styles = StyleSheet.create({
     }
 })
 
-const mapStateToProps = ({ user }) => {
+const mapStateToProps = ({ user, posts }) => {
     return {
         email: user.email,
         name: user.name,
+        loading: posts.isUploading
     }
 }
 

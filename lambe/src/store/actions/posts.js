@@ -8,15 +8,14 @@ import axios from "axios";
 
 export const addPost = post => {
     return dispatch => {
+        dispatch(creatingPost())
         axios.post('/posts.json', { ...post })
             .catch(err => console.log(err))
-            .then((res) => console.log(res.data))
+            .then((res) => {
+                dispatch(getPosts())
+                dispatch(postCreated())
+            })
     }
-
-    // return {
-    //     type: ADD_POST,
-    //     payload: post
-    // }
 }
 
 export const addComment = comment => {
@@ -44,7 +43,7 @@ export const getPosts = () => {
                         id: key,
                     })
                 }
-                dispatch(setPosts(posts))
+                dispatch(setPosts(posts.reverse()))
             }
             )
     }
