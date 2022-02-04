@@ -1,18 +1,20 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { View, StyleSheet, Image, Dimensions } from 'react-native'
 import AddComment from './AddComment'
 import Author from './Author'
 import Comments from './Comments'
 
-export default Post = (props) => {
-    return (
-        <View style={styles.container}>
-            <Image source={props.image} style={styles.image}></Image>
-            <Author email={props.email} nickName={props.nickName}></Author>
-            <Comments comments={props.comments} />
-            <AddComment></AddComment>
-        </View>
-    )
+class Post extends Component {
+    render() {
+        return (
+            <View style={styles.container} >
+                <Image source={this.props.image} style={styles.image}></Image>
+                <Author email={this.props.email} nickName={this.props.nickName}></Author>
+                <Comments comments={this.props.comments} />
+                <AddComment postId={this.props.id}></AddComment>
+            </View>
+        )
+    }
 }
 const styles = StyleSheet.create({
     container: {
@@ -25,3 +27,4 @@ const styles = StyleSheet.create({
     }
 })
 
+export default Post 

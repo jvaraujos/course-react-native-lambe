@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
     }
 })
 
-
 const mapStateToProps = ({ posts }) => {
     return {
         posts: posts.posts
