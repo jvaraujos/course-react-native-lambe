@@ -1,4 +1,6 @@
 import React, { Component, setState } from 'react'
+import { connect } from 'react-redux'
+import { addPost } from '../store/actions/posts'
 import {
     View,
     Text,
@@ -12,21 +14,31 @@ import {
     Alert
 
 } from 'react-native'
-import { ImagePicker, launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { launchCamera } from 'react-native-image-picker';
 
-export default props => {
-
+class AddPhoto extends Component {
     state = {
         image: {
             uri: null,
-            data: '',
-        },
-        comment: '',
+            comment: '',
+        }
     }
 
 
-    save = async () => {
-        Alert.alert('Imagem adicionada!', this.state.comment)
+    save = () => {
+        this.props.onAddPost({
+            id: Math.random(),
+            nickName: this.props.name,
+            email: this.props.email,
+            image: this.state.image,
+            comments: [{
+                nickName: this.props.name,
+                comment: this.state.comment
+            }]
+        })
+
+        this.setState({ image: null, comment: '' })
+        this.props.navigation.navigate('Feed')
     }
 
     pickImage = () => {
@@ -40,33 +52,35 @@ export default props => {
                 this.setState({ image: { uri: res.assets[0].uri, base64: res.assets[0].data } })
             }
         });
-        // console.log(result)
+
 
     }
-
-    return (
-        <ScrollView>
-            <View style={styles.container}>
-                <Text style={styles.title}>Compartilhe uma imagem</Text>
-                <View style={styles.imageContainer}>
-                    <Image source={this.state.image}
-                        style={styles.image} />
+    render() {
+        return (
+            <ScrollView>
+                <View style={styles.container}>
+                    <Text style={styles.title}>Compartilhe uma imagem</Text>
+                    <View style={styles.imageContainer}>
+                        <Image source={this.state.image}
+                            style={styles.image} />
+                    </View>
+                    <TouchableOpacity onPress={this.pickImage}
+                        style={styles.buttom}>
+                        <Text style={styles.buttomText}>Escolha a foto</Text>
+                    </TouchableOpacity>
+                    <TextInput placeholder='Algum comentário para a foto?'
+                        style={styles.input} value={this.state.comment}
+                        onChangeText={comment => this.setState({ comment })} />
+                    <TouchableOpacity onPress={this.save}
+                        disabled={this.props.loading}
+                        style={[styles.buttom, this.props.loading ? styles.buttonDisabled : null]}>
+                        <Text style={styles.buttomText}>Salvar</Text>
+                    </TouchableOpacity>
                 </View>
-                <TouchableOpacity onPress={pickImage}
-                    style={styles.buttom}>
-                    <Text style={styles.buttomText}>Escolha a foto</Text>
-                </TouchableOpacity>
-                <TextInput placeholder='Algum comentário para a foto?'
-                    style={styles.input} value={this.state.comment}
-                    onChangeText={comment => this.setState({ comment })} />
-                <TouchableOpacity onPress={this.save}
-                    disabled={this.props.loading}
-                    style={[styles.buttom, this.props.loading ? styles.buttonDisabled : null]}>
-                    <Text style={styles.buttomText}>Salvar</Text>
-                </TouchableOpacity>
-            </View>
-        </ScrollView >
-    )
+            </ScrollView >
+        )
+    }
+
 
 }
 
@@ -109,4 +123,16 @@ const styles = StyleSheet.create({
     }
 })
 
+const mapStateToProps = ({ user }) => {
+    return {
+        email: user.email,
+        name: user.name,
+    }
+}
 
+const mapDispatchToProps = dispatch => {
+    return {
+        onAddPost: post => dispatch(addPost(post))
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(AddPhoto)
