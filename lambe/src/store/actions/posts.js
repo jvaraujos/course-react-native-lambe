@@ -18,12 +18,7 @@ export const addPost = post => {
     }
 }
 
-export const addComment = comment => {
-    return {
-        type: ADD_COMMENT,
-        payload: comment
-    }
-}
+
 export const setPosts = posts => {
     return {
         type: SET_POST,
@@ -48,6 +43,33 @@ export const getPosts = () => {
             )
     }
 }
+
+export const addComment = payload => {
+    return (dispatch, getState) => {
+        axios.get(`/posts/${payload.postId}.json`)
+            .catch(err => {
+                dispatch(setMessage({
+                    title: 'Erro',
+                    text: 'Ocorreu um erro inesperado!'
+                }))
+            })
+            .then(res => {
+                const comments = res.data.comments || []
+                comments.push(payload.comment)
+                axios.patch(`/posts/${payload.postId}.json?`, { comments })
+                    .catch(err => {
+                        dispatch(setMessage({
+                            title: 'Erro',
+                            text: 'Ocorreu um erro inesperado!'
+                        }))
+                    })
+                    .then(res => {
+                        dispatch(getPosts())
+                    })
+            })
+    }
+}
+
 export const creatingPost = () => {
     return {
         type: CREATING_POST
