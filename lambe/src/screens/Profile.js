@@ -1,24 +1,28 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { Gravatar } from 'react-native-gravatar'
+import { connect } from 'react-redux'
+import { logout } from '../store/actions/user'
 
-export default props => {
+class Profile extends Component {
     logout = () => {
-        props.navigation.navigate('Auth')
+        this.props.onLogout()
+        this.props.navigation.navigate('Auth')
     }
-    const options = { email: props.email, secure: true }
-    return (
-        <View style={styles.container}>
+
+    render() {
+        const options = { email: this.props.email, secure: true }
+
+        return <View style={styles.container}>
             <Gravatar options={options} style={styles.avatar} />
-            <Text style={styles.nickname}>{props.name}</Text>
-            <Text style={styles.email}>{props.email}</Text>
+            <Text style={styles.nickname}>{this.props.name}</Text>
+            <Text style={styles.email}>{this.props.email}</Text>
             <TouchableOpacity onPress={this.logout}
                 style={styles.buttom}>
                 <Text style={styles.buttomText}>Sair</Text>
             </TouchableOpacity>
-        </View>
-    )
-
+        </View >
+    }
 }
 
 const styles = StyleSheet.create({
@@ -51,3 +55,18 @@ const styles = StyleSheet.create({
         color: '#FFF'
     }
 })
+
+const mapStateToProps = ({ user }) => {
+    return {
+        email: user.email,
+        name: user.name
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onLogout: () => dispatch(logout())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)

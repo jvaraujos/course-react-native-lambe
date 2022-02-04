@@ -1,42 +1,26 @@
-import React from 'react'
-import { ScrollView, View, StyleSheet, FlatList } from 'react-native'
-import Header from '../components/Header'
+import React, { Component } from 'react'
+import { View, StyleSheet, FlatList } from 'react-native'
 import Post from '../components/Post'
+import Header from '../components/Header'
+import { connect } from 'react-redux'
+import { getPosts } from '../store/actions/posts'
 
-export default props => {
-    state = {
-        pots: [{
-            id: Math.random(),
-            nickName: "Rafael Pereira Filho",
-            email: "rafaelprrflh@gmail.com",
-            image: require('../assets/imgs/fence.jpg'),
-            comments: [{
-                nickName: "Thiago",
-                comment: "Ola Tudo bem ?"
-            }, {
-                nickName: "Vanessa",
-                comment: "Osss bem ?"
-            }]
-        },
-        {
-            id: Math.random(),
-            nickName: "Francisco Almeida",
-            email: "xico@gmail.com",
-            image: require('../assets/imgs/bw.jpg'),
-            comments: []
-        }]
+class Feed extends Component {
+    componentDidMount() {
+        this.props.onFetchPosts()
     }
-
-    return (
-        <View style={styles.container}>
-            <Header />
-            <FlatList
-                data={this.state.pots}
-                keyExtractor={item => `${item.id}`}
-                renderItem={({ item }) => <Post key={item.id} {...item} />}
-            />
-        </View>
-    )
+    render() {
+        return (
+            <View style={styles.container}>
+                <Header></Header>
+                <FlatList
+                    data={this.props.posts}
+                    keyExtractor={item => `${item.id}`}
+                    renderItem={({ item }) => <Post key={item.id} {...item} />}
+                />
+            </View>
+        )
+    }
 }
 const styles = StyleSheet.create({
     container: {
@@ -46,3 +30,15 @@ const styles = StyleSheet.create({
         backgroundColor: '#F5FCFF'
     }
 })
+
+const mapStateToProps = ({ posts }) => {
+    return {
+        posts: posts.posts
+    }
+}
+const mapDispatchToProps = dispatch => {
+    return {
+        onFetchPosts: () => dispatch(getPosts())
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Feed)

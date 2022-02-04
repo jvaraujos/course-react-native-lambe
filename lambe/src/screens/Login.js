@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { connect } from 'react-redux'
+import { login } from '../store/actions/user'
 
-export default props => {
+class Login extends Component {
     state = {
-        email: '',
-        password: '',
+        name: 'Joao vitor Araujo',
+        email: 'jv._.araujo@hotmail.com',
+        password: ''
     }
-    return (
-        <View style={styles.container}>
+    render() {
+        return <View style={styles.container}>
             <TextInput
                 placeholder="Email"
                 autoFocus={true}
@@ -24,17 +27,18 @@ export default props => {
                 onChangeText={password => this.setState({ password })}
             />
             <TouchableOpacity onPress={() => {
-                props.navigation.navigate('Home')
+                this.props.navigation.navigate('Home')
+                this.props.onLogin({ ...this.state })
             }} style={styles.buttom}>
                 <Text style={styles.buttomText}>Login</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {
-                props.navigation.navigate('Register')
+                this.props.navigation.navigate('Register')
             }} style={styles.buttom}>
                 <Text style={styles.buttomText}>Criar nova conta.</Text>
             </TouchableOpacity>
         </View >
-    );
+    }
 }
 
 
@@ -63,3 +67,10 @@ const styles = StyleSheet.create({
     }
 })
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onLogin: user => dispatch(login(user))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Login)
