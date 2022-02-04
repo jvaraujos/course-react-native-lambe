@@ -38,9 +38,6 @@ class AddComment extends Component {
                         value={this.state.comment}
                         onChangeText={comment => this.setState({ comment })}
                         onSubmitEditing={this.handleAddComment} />
-                    {/* <TWF onPress={() => this.setState({ editMode: false })}>
-                        <Icon name='send' size={15} color='#555' />
-                    </TWF> */}
                 </View>
             )
         } else {

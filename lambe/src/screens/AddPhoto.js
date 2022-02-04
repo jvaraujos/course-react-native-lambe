@@ -16,6 +16,8 @@ import {
 } from 'react-native'
 import { launchCamera } from 'react-native-image-picker';
 
+const noUser = 'Você precisa estar logado para adicionar imagens'
+
 class AddPhoto extends Component {
     state = {
         image: {
@@ -26,6 +28,10 @@ class AddPhoto extends Component {
 
 
     save = () => {
+        if (!this.props.name) {
+            Alert.alert('Falha!', noUser)
+            return
+        }
         this.props.onAddPost({
             id: Math.random(),
             nickName: this.props.name,
@@ -42,7 +48,10 @@ class AddPhoto extends Component {
     }
 
     pickImage = () => {
-
+        if (!this.props.name) {
+            Alert.alert('Falha!', noUser)
+            return
+        }
         launchCamera({
             saveToPhotos: true,
             mediaType: 'photo',

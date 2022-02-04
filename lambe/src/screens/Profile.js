@@ -6,15 +6,15 @@ import { logout } from '../store/actions/user'
 
 class Profile extends Component {
     logout = () => {
-        this.props.navigation.navigate('Auth')
         this.props.onLogout()
+        this.props.navigation.navigate('Auth')
     }
-    options = { email: this.props.email, secure: true }
 
     render() {
+        const options = { email: this.props.email, secure: true }
 
         return <View style={styles.container}>
-            <Gravatar options={this.options} style={styles.avatar} />
+            <Gravatar options={options} style={styles.avatar} />
             <Text style={styles.nickname}>{this.props.name}</Text>
             <Text style={styles.email}>{this.props.email}</Text>
             <TouchableOpacity onPress={this.logout}
@@ -65,10 +65,8 @@ const mapStateToProps = ({ user }) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onLogout: user => dispatch(logout())
+        onLogout: () => dispatch(logout())
     }
 }
-
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)
