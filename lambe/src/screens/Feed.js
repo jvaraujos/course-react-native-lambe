@@ -3,9 +3,12 @@ import { View, StyleSheet, FlatList } from 'react-native'
 import Post from '../components/Post'
 import Header from '../components/Header'
 import { connect } from 'react-redux'
+import { getPosts } from '../store/actions/posts'
 
 class Feed extends Component {
-
+    componentDidMount() {
+        this.props.onFetchPosts()
+    }
     render() {
         return (
             <View style={styles.container}>
@@ -18,8 +21,6 @@ class Feed extends Component {
             </View>
         )
     }
-
-
 }
 const styles = StyleSheet.create({
     container: {
@@ -35,5 +36,9 @@ const mapStateToProps = ({ posts }) => {
         posts: posts.posts
     }
 }
-
-export default connect(mapStateToProps)(Feed)
+const mapDispatchToProps = dispatch => {
+    return {
+        onFetchPosts: () => dispatch(getPosts())
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Feed)

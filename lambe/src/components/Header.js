@@ -70,7 +70,6 @@ const styles = StyleSheet.create({
         height: 30,
         marginLeft: 10,
         borderRadius: 15,
-
     }
 })
 

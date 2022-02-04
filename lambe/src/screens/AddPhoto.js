@@ -22,6 +22,7 @@ class AddPhoto extends Component {
     state = {
         image: {
             uri: null,
+            base64: '',
             comment: '',
         }
     }
@@ -43,7 +44,7 @@ class AddPhoto extends Component {
             }]
         })
 
-        this.setState({ image: null, comment: '' })
+        this.setState({ image: null, comment: '', base64: '' })
         this.props.navigation.navigate('Feed')
     }
 
@@ -58,7 +59,7 @@ class AddPhoto extends Component {
             includeBase64: true,
         }, (res) => {
             if (!res.didCancel) {
-                this.setState({ image: { uri: res.assets[0].uri, base64: res.assets[0].data } })
+                this.setState({ image: { uri: res.assets[0].uri, base64: res.assets[0].base64 } })
             }
         });
 
