@@ -3,7 +3,7 @@ import Feed from '../screens/Feed'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-
+import AddPhoto from '../screens/AddPhoto'
 
 
 const BottomTabNavigator = createBottomTabNavigator();
@@ -19,7 +19,7 @@ const AppTabNavigator = () => {
                             <Icon name="home" color={color} size={size} />
                         )
                     }} />
-                <BottomTabNavigator.Screen name="AddPhoto" component={Feed}
+                <BottomTabNavigator.Screen name="AddPhoto" component={AddPhoto}
                     options={{
                         tabBarIcon: ({ color, size }) => (
                             <Icon name="camera" color={color} size={size} />
