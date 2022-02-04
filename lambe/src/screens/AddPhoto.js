@@ -79,6 +79,7 @@ class AddPhoto extends Component {
                     </TouchableOpacity>
                     <TextInput placeholder='Algum comentário para a foto?'
                         style={styles.input} value={this.state.comment}
+                        editable={this.props.name != null}
                         onChangeText={comment => this.setState({ comment })} />
                     <TouchableOpacity onPress={this.save}
                         disabled={this.props.loading}
