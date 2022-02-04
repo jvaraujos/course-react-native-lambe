@@ -5,11 +5,9 @@ import { login } from '../store/actions/user'
 
 class Login extends Component {
     state = {
-
         name: 'Joao vitor Araujo',
         email: 'jv._.araujo@hotmail.com',
         password: ''
-
     }
     render() {
         return <View style={styles.container}>

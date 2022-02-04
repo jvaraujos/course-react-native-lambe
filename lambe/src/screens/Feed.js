@@ -1,9 +1,8 @@
-import React from 'react'
-import { ScrollView, View, StyleSheet, FlatList } from 'react-native'
-import Header from '../components/Header'
+import React, { Component } from 'react'
+import { View, StyleSheet, FlatList } from 'react-native'
 import Post from '../components/Post'
-
-export default props => {
+import Header from '../components/Header'
+class Feed extends Component {
     state = {
         pots: [{
             id: Math.random(),
@@ -26,17 +25,20 @@ export default props => {
             comments: []
         }]
     }
+    render() {
+        return (
+            <View style={styles.container}>
+                <Header></Header>
+                <FlatList
+                    data={this.state.pots}
+                    keyExtractor={item => `${item.id}`}
+                    renderItem={({ item }) => <Post key={item.id} {...item} />}
+                />
+            </View>
+        )
+    }
 
-    return (
-        <View style={styles.container}>
-            <Header />
-            <FlatList
-                data={this.state.pots}
-                keyExtractor={item => `${item.id}`}
-                renderItem={({ item }) => <Post key={item.id} {...item} />}
-            />
-        </View>
-    )
+
 }
 const styles = StyleSheet.create({
     container: {
@@ -46,3 +48,5 @@ const styles = StyleSheet.create({
         backgroundColor: '#F5FCFF'
     }
 })
+
+export default Feed

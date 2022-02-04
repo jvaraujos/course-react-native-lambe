@@ -9,7 +9,7 @@ const BottomTabNavigator = createBottomTabNavigator();
 
 export default props => {
     return (
-        <BottomTabNavigator.Navigator initialRouteName='Profile' screenOptions={{
+        <BottomTabNavigator.Navigator initialRouteName='Feed' screenOptions={{
             headerShown: false
         }}>
             <BottomTabNavigator.Screen name="Feed" component={Feed}
