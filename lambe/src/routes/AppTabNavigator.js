@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import AddPhoto from '../screens/AddPhoto'
+import Profile from '../screens/Profile';
 
 
 const BottomTabNavigator = createBottomTabNavigator();
@@ -25,7 +26,7 @@ const AppTabNavigator = () => {
                             <Icon name="camera" color={color} size={size} />
                         )
                     }} />
-                <BottomTabNavigator.Screen name="User" component={Feed}
+                <BottomTabNavigator.Screen name="User" component={Profile}
                     options={{
                         tabBarIcon: ({ color, size }) => (
                             <Icon name="account-circle" color={color} size={size} />
