@@ -1,15 +1,21 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AppTabNavigator from './AppTabNavigator';
 import { NavigationContainer } from '@react-navigation/native';
+import Login from '../screens/Login';
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 const Router = () => {
     return (
         <NavigationContainer>
-            <Stack.Navigator>
+            <Stack.Navigator initialRouteName='Auth'>
                 <Stack.Screen
-                    name="Feed"
+                    name="Auth"
+                    component={Login}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="Home"
                     component={AppTabNavigator}
                     options={{ headerShown: false }}
                 />

@@ -2,26 +2,24 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { Gravatar } from 'react-native-gravatar'
 
-class Profile extends Component {
+export default props => {
     logout = () => {
-        this.props.onLogout()
-        this.props.navigation.navigate('Auth')
+        props.navigation.navigate('Auth')
     }
 
-    render() {
-        const options = { email: this.props.email, secure: true }
-        return (
-            <View style={styles.container}>
-                <Gravatar options={options} style={styles.avatar} />
-                <Text style={styles.nickname}>{this.props.name}</Text>
-                <Text style={styles.email}>{this.props.email}</Text>
-                <TouchableOpacity onPress={this.logout}
-                    style={styles.buttom}>
-                    <Text style={styles.buttomText}>Sair</Text>
-                </TouchableOpacity>
-            </View>
-        )
-    }
+    const options = { email: props.email, secure: true }
+    return (
+        <View style={styles.container}>
+            <Gravatar options={options} style={styles.avatar} />
+            <Text style={styles.nickname}>{props.name}</Text>
+            <Text style={styles.email}>{props.email}</Text>
+            <TouchableOpacity onPress={this.logout}
+                style={styles.buttom}>
+                <Text style={styles.buttomText}>Sair</Text>
+            </TouchableOpacity>
+        </View>
+    )
+
 }
 
 const styles = StyleSheet.create({
@@ -54,4 +52,3 @@ const styles = StyleSheet.create({
         color: '#FFF'
     }
 })
-export default Profile

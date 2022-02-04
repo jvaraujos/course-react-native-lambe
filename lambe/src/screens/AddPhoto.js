@@ -14,7 +14,7 @@ import {
 } from 'react-native'
 import { ImagePicker, launchCamera, launchImageLibrary } from 'react-native-image-picker';
 
-class AddPhoto extends Component {
+export default props => {
 
     state = {
         image: {
@@ -29,47 +29,45 @@ class AddPhoto extends Component {
         Alert.alert('Imagem adicionada!', this.state.comment)
     }
 
-    render() {
+    pickImage = () => {
 
-        pickImage = () => {
+        launchCamera({
+            saveToPhotos: true,
+            mediaType: 'photo',
+            includeBase64: true,
+        }, (res) => {
+            if (!res.didCancel) {
+                this.setState({ image: { uri: res.assets[0].uri, base64: res.assets[0].data } })
+            }
+        });
+        // console.log(result)
 
-            launchCamera({
-                saveToPhotos: true,
-                mediaType: 'photo',
-                includeBase64: true,
-            }, (res) => {
-                if (!res.didCancel) {
-                    this.setState({ image: { uri: res.assets[0].uri, base64: res.assets[0].data } })
-                }
-            });
-            // console.log(result)
-
-        }
-
-        return (
-            <ScrollView>
-                <View style={styles.container}>
-                    <Text style={styles.title}>Compartilhe uma imagem</Text>
-                    <View style={styles.imageContainer}>
-                        <Image source={this.state.image}
-                            style={styles.image} />
-                    </View>
-                    <TouchableOpacity onPress={pickImage}
-                        style={styles.buttom}>
-                        <Text style={styles.buttomText}>Escolha a foto</Text>
-                    </TouchableOpacity>
-                    <TextInput placeholder='Algum comentário para a foto?'
-                        style={styles.input} value={this.state.comment}
-                        onChangeText={comment => this.setState({ comment })} />
-                    <TouchableOpacity onPress={this.save}
-                        disabled={this.props.loading}
-                        style={[styles.buttom, this.props.loading ? styles.buttonDisabled : null]}>
-                        <Text style={styles.buttomText}>Salvar</Text>
-                    </TouchableOpacity>
-                </View>
-            </ScrollView >
-        )
     }
+
+    return (
+        <ScrollView>
+            <View style={styles.container}>
+                <Text style={styles.title}>Compartilhe uma imagem</Text>
+                <View style={styles.imageContainer}>
+                    <Image source={this.state.image}
+                        style={styles.image} />
+                </View>
+                <TouchableOpacity onPress={pickImage}
+                    style={styles.buttom}>
+                    <Text style={styles.buttomText}>Escolha a foto</Text>
+                </TouchableOpacity>
+                <TextInput placeholder='Algum comentário para a foto?'
+                    style={styles.input} value={this.state.comment}
+                    onChangeText={comment => this.setState({ comment })} />
+                <TouchableOpacity onPress={this.save}
+                    disabled={this.props.loading}
+                    style={[styles.buttom, this.props.loading ? styles.buttonDisabled : null]}>
+                    <Text style={styles.buttomText}>Salvar</Text>
+                </TouchableOpacity>
+            </View>
+        </ScrollView >
+    )
+
 }
 
 const styles = StyleSheet.create({
@@ -111,5 +109,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default AddPhoto
 
