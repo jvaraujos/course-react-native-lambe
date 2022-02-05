@@ -4,6 +4,7 @@ import {
     USER_LOADED,
     LOADING_USER
 } from "./actionTypes";
+import { setMessage } from './message'
 
 import axios from 'axios'
 import { dispatchCommand } from "react-native/Libraries/Renderer/implementations/ReactNativeRenderer-prod";
@@ -49,7 +50,11 @@ export const createUser = user => {
                             }))
                         })
                         .then(() => {
-                            console.log('Usuario criado com sucesso')
+                            dispatch(setMessage({
+                                title: 'Sucesso',
+                                text: 'Usuario criado com sucesso!'
+                            }))
+                            dispatch(login(user))
                         })
                 }
             })

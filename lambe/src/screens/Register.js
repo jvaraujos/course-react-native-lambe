@@ -23,7 +23,7 @@ class Register extends Component {
                 email: '',
                 password: ''
             })
-            this.props.navigation.navigate('Profile') // Feed
+            this.props.navigation.navigate('Auth')
         }
     }
 
@@ -40,7 +40,9 @@ class Register extends Component {
                     secureTextEntry={true} value={this.state.password}
                     onChangeText={password => this.setState({ password })} />
                 <TouchableOpacity
-                    onPress={() => { this.props.onCreateUser(this.state) }}
+                    onPress={() => {
+                        this.props.onCreateUser(this.state)
+                    }}
                     style={styles.buttom}>
                     <Text style={styles.buttomText}>Salvar</Text>
                 </TouchableOpacity>
