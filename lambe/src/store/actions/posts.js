@@ -8,9 +8,9 @@ import axios from "axios";
 import { setMessage } from './message'
 
 export const addPost = post => {
-    return dispatch => {
+    return (dispatch, getState) => {
         dispatch(creatingPost())
-        axios.post('/posts.json', { ...post })
+        axios.post(`/posts.json?auth=${getState().user.token}`, { ...post })
             .catch(err =>
                 dispatch(setMessage({
                     title: 'Erro',
@@ -65,7 +65,7 @@ export const addComment = payload => {
             .then(res => {
                 const comments = res.data.comments || []
                 comments.push(payload.comment)
-                axios.patch(`/posts/${payload.postId}.json?`, { comments })
+                axios.patch(`/posts/${payload.postId}.json?auth=${getState().user.token}`, { comments })
                     .catch(err => {
                         dispatch(setMessage({
                             title: 'Erro',

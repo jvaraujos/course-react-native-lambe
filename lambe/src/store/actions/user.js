@@ -7,7 +7,6 @@ import {
 import { setMessage } from './message'
 
 import axios from 'axios'
-import { dispatchCommand } from "react-native/Libraries/Renderer/implementations/ReactNativeRenderer-prod";
 
 const authBaseURL = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty'
 const API_KEY = 'AIzaSyDsgAqKmIbjob3WKa8GNNV4PxQQd5FZ3Jk'
@@ -85,6 +84,7 @@ export const login = user => {
             .catch(err => console.log(err))
             .then((res) => {
                 if (res.data.localId) {
+                    user.token = res.data.idToken
                     axios.get(`/users/${res.data.localId}.json`)
                         .catch(err => console.log(err))
                         .then(res => {
