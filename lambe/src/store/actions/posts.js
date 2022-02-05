@@ -5,15 +5,21 @@ import {
     POST_CREATED
 } from "./actionTypes";
 import axios from "axios";
+import { setMessage } from './message'
 
 export const addPost = post => {
     return dispatch => {
         dispatch(creatingPost())
         axios.post('/posts.json', { ...post })
-            .catch(err => console.log(err))
+            .catch(err =>
+                dispatch(setMessage({
+                    title: 'Erro',
+                    text: err
+                })))
             .then((res) => {
                 dispatch(getPosts())
                 dispatch(postCreated())
+
             })
     }
 }
@@ -28,7 +34,10 @@ export const setPosts = posts => {
 export const getPosts = () => {
     return dispatch => {
         axios.get('/posts.json')
-            .catch(err => console.log(err))
+            .catch(err => dispatch(setMessage({
+                title: 'Erro',
+                text: err
+            })))
             .then((res) => {
                 const rawPosts = res.data
                 const posts = []
