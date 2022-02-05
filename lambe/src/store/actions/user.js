@@ -1,11 +1,17 @@
-import { USER_LOGGED_IN, USER_LOGGED_OUT } from "./actionTypes";
+import {
+    USER_LOGGED_IN,
+    USER_LOGGED_OUT,
+    USER_LOADED,
+    LOADING_USER
+} from "./actionTypes";
+import { setMessage } from './message'
 
 import axios from 'axios'
 
 const authBaseURL = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty'
 const API_KEY = 'AIzaSyDsgAqKmIbjob3WKa8GNNV4PxQQd5FZ3Jk'
 
-export const login = user => {
+export const userLogged = user => {
     return {
         type: USER_LOGGED_IN,
         payload: user
@@ -43,9 +49,54 @@ export const createUser = user => {
                             }))
                         })
                         .then(() => {
-                            console.log('Usuario criado com sucesso')
+
+                            dispatch(login(user))
+                            // delete user.password
+                            // user.id = res.data.localId
+                            // dispatch(userLogged(user))
+                            // dispatch(userLoaded())
                         })
                 }
             })
     }
+}
+
+export const loadingUser = () => {
+    return {
+        type: LOADING_USER,
+    }
+}
+
+export const userLoaded = () => {
+    return {
+        type: USER_LOADED,
+    }
+}
+
+export const login = user => {
+    return dispatch => {
+        dispatch(loadingUser())
+        axios.post(`${authBaseURL}/verifyPassword?key=${API_KEY}`, {
+            email: user.email,
+            password: user.password,
+            returnSecureToken: true
+        })
+            .catch(err => console.log(err))
+            .then((res) => {
+                if (res.data.localId) {
+                    user.token = res.data.idToken
+                    axios.get(`/users/${res.data.localId}.json`)
+                        .catch(err => console.log(err))
+                        .then(res => {
+                            delete user.password
+                            user.name = res.data.name
+                            dispatch(userLogged(user))
+                            dispatch(userLoaded())
+
+                        })
+                }
+            })
+    }
+
+
 }

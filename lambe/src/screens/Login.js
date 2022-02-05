@@ -5,10 +5,16 @@ import { login } from '../store/actions/user'
 
 class Login extends Component {
     state = {
-        name: 'Joao vitor Araujo',
-        email: 'jv._.araujo@hotmail.com',
+        name: '',
+        email: '',
         password: ''
     }
+    componentDidUpdate = prevProps => {
+        if (prevProps.isLoading && !this.props.isLoading) {
+            this.props.navigation.navigate('Home')
+        }
+    }
+
     render() {
         return <View style={styles.container}>
             <TextInput
@@ -27,7 +33,6 @@ class Login extends Component {
                 onChangeText={password => this.setState({ password })}
             />
             <TouchableOpacity onPress={() => {
-                this.props.navigation.navigate('Home')
                 this.props.onLogin({ ...this.state })
             }} style={styles.buttom}>
                 <Text style={styles.buttomText}>Login</Text>
@@ -67,10 +72,16 @@ const styles = StyleSheet.create({
     }
 })
 
+const mapStateToProps = ({ user }) => {
+    return {
+        isLoading: user.isLoading
+    }
+}
+
 const mapDispatchToProps = (dispatch) => {
     return {
         onLogin: user => dispatch(login(user))
     }
 }
 
-export default connect(null, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login)
