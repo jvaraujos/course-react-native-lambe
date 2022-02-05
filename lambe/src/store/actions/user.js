@@ -50,11 +50,12 @@ export const createUser = user => {
                             }))
                         })
                         .then(() => {
-                            dispatch(setMessage({
-                                title: 'Sucesso',
-                                text: 'Usuario criado com sucesso!'
-                            }))
+
                             dispatch(login(user))
+                            // delete user.password
+                            // user.id = res.data.localId
+                            // dispatch(userLogged(user))
+                            // dispatch(userLoaded())
                         })
                 }
             })
@@ -87,8 +88,8 @@ export const login = user => {
                     axios.get(`/users/${res.data.localId}.json`)
                         .catch(err => console.log(err))
                         .then(res => {
-                            user.password = null,
-                                user.name = res.data.name
+                            delete user.password
+                            user.name = res.data.name
                             dispatch(userLogged(user))
                             dispatch(userLoaded())
 

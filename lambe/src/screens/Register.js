@@ -23,7 +23,7 @@ class Register extends Component {
                 email: '',
                 password: ''
             })
-            this.props.navigation.navigate('Auth')
+            this.props.navigation.navigate('Home')
         }
     }
 
@@ -90,4 +90,3 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register)
-// export default Register
